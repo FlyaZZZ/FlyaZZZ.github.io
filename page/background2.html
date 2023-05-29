@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>数据可视化</title>
+    <!-- ctrl+h即可调出查询与替换窗口 -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=, initial-scale=1.0">
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        .shell {
+            height: 100vh;
+            overflow-x: hidden;
+            perspective: 3px;
+        }
+
+        .shell div {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-style: 30px;
+            letter-spacing: 2px;
+        }
+
+        .image {
+            transform: translateZ(-1px) scale(1.6);
+            background-size: cover;
+            height: 100vh;
+            z-index: -1;
+        }
+
+        .text {
+            height: 50vh;
+            background-color: #fff;
+        }
+
+        .text h1 {
+            color: #000;
+        }
+
+        .heading {
+            z-index: -1;
+            transform: translateY(-30vh) translateZ(1px);
+            color: #fff;
+            font-size: 30px;
+        }
+    </style>
+</head>
+
+
+<body>
+    <div id="navbar-container">
+        <!-- 导航栏 -->
+    </div>
+
+    <script>
+        // 使用 JavaScript 加载导航栏内容
+        window.addEventListener('DOMContentLoaded', function () {
+            var navbarContainer = document.getElementById('navbar-container');
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', 'navmain.html', true);
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    navbarContainer.innerHTML = xhr.responseText;
+                }
+            };
+            xhr.send();
+        });
+    </script>
+
+    <div class="shell">
+        <div class="image" style="background-image: url('../static/image/1.jpg');"></div>
+        <div class="heading">
+            <h1>When you are confused</h1>
+        </div>
+        <div class="text">
+            <h1>Set goals in your mind</h1>
+        </div>
+
+        <div class="image" style="background-image: url('../static/image/1.jpg');"></div>
+        <div class="heading">
+            <h1>When you're down</h1>
+        </div>
+        <div class="text">
+            <h1>Try to wake up the beast in your heart</h1>
+        </div>
+
+        <div class="image" style="background-image: url('../static/image/1.jpg');"></div>
+        <div class="heading">
+            <h1>When prople leave you</h1>
+        </div>
+        <div class="text">
+            <h1>It's time to start your season</h1>
+        </div>
+
+        <div class="image" style="background-image: url('../static/image/1.jpg');"></div>
+        <div class="heading">
+            <h1>Come on,stranger.</h1>
+        </div>
+    </div>
+</body>
+
+</html>

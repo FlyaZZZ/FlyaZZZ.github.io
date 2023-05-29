@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>ECharts Map Example</title>
+    <script src="https://cdn.jsdelivr.net/npm/jquery"></script>
+    <script src="https://cdn.jsdelivr.net/npm/echarts"></script>
+    <script src="https://cdn.jsdelivr.net/npm/d3-array"></script>
+    <script src="https://cdn.jsdelivr.net/npm/d3-geo"></script>
+    <link rel="stylesheet" href="../static/styles.css" />
+    <style>
+        html,
+        body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            position: relative;
+        }
+
+        #navbar-container {
+            height: 70px;
+            background-color: #f2f2f2;
+            /* 导航栏样式 */
+            /* ... */
+        }
+
+        #main {
+            width: 800px;
+            height: 600px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+    </style>
+</head>
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>数据可视化</title>
+    <!-- ctrl+h即可调出查询与替换窗口 -->
+</head>
+
+<body>
+    <div id="impress">
+        <div class="step" data-x="0" data-y="0">
+            <template type="markdown">
+                欢迎使用`Marked In Html` !
+                ====
+                *这只是一个简单的例子*
+            </template>
+        </div>
+        <div class="step" data-x="1000" data-y="0">
+            <template type="markdown">
+                此项目的目的主要是为了简化`impress.js`的使用，让用户更专注写作
+                ======
+
+                - 使用`marked`为`markdown`解析
+                - 使用`highlight.js`支持代码高亮功能
+                - 使用`github-markdown-css`作为默认样式
+
+                代码示例
+                ```js
+                intelligentProcessingIndent ($template){
+                let lines = $template.innerHTML.split('\n')
+                lines.length && /^\s*$/.test(lines[0]) && lines.shift()
+                lines.length && /^\s*$/.test(lines[lines.length-1]) && lines.pop()
+                let minSpaceSize = Math.min(...lines.map(line => line.length ? line.match(/^\s*/)[0].length : Infinity))
+                return lines.map(line => line.substring(minSpaceSize)).join('\n')
+                }
+                ```
+            </template>
+        </div>
+        <div class="step" data-x="2000" data-y="0" data-rotate="90">
+            <div id="main" style="width: 800px; height: 400px;"></div>
+            <script>
+                var chartDom = document.getElementById('main');
+                var myChart = echarts.init(chartDom);
+                var option;
+
+                option = {
+                    tooltip: {
+                        trigger: 'item',
+                        formatter: '{a} <br/>{b}: {c} ({d}%)'
+                    },
+                    legend: {
+                        data: [
+                            'Direct',
+                            'Marketing',
+                            'Search Engine',
+                            'Email',
+                            'Union Ads',
+                            'Video Ads',
+                            'Baidu',
+                            'Google',
+                            'Bing',
+                            'Others'
+                        ]
+                    },
+                    series: [
+                        {
+                            name: 'Access From',
+                            type: 'pie',
+                            selectedMode: 'single',
+                            radius: [0, '30%'],
+                            label: {
+                                position: 'inner',
+                                fontSize: 14
+                            },
+                            labelLine: {
+                                show: false
+                            },
+                            data: [
+                                { value: 1548, name: 'Search Engine' },
+                                { value: 775, name: 'Direct' },
+                                { value: 679, name: 'Marketing', selected: true }
+                            ]
+                        },
+                        {
+                            name: 'Access From',
+                            type: 'pie',
+                            radius: ['45%', '60%'],
+                            labelLine: {
+                                length: 30
+                            },
+                            label: {
+                                formatter: '{a|{a}}{abg|}\n{hr|}\n  {b|{b}：}{c}  {per|{d}%}  ',
+                                backgroundColor: '#F6F8FC',
+                                borderColor: '#8C8D8E',
+                                borderWidth: 1,
+                                borderRadius: 4,
+                                rich: {
+                                    a: {
+                                        color: '#6E7079',
+                                        lineHeight: 22,
+                                        align: 'center'
+                                    },
+                                    hr: {
+                                        borderColor: '#8C8D8E',
+                                        width: '100%',
+                                        borderWidth: 1,
+                                        height: 0
+                                    },
+                                    b: {
+                                        color: '#4C5058',
+                                        fontSize: 14,
+                                        fontWeight: 'bold',
+                                        lineHeight: 33
+                                    },
+                                    per: {
+                                        color: '#fff',
+                                        backgroundColor: '#4C5058',
+                                        padding: [3, 4],
+                                        borderRadius: 4
+                                    }
+                                }
+                            },
+                            data: [
+                                { value: 1048, name: 'Baidu' },
+                                { value: 335, name: 'Direct' },
+                                { value: 310, name: 'Email' },
+                                { value: 251, name: 'Google' },
+                                { value: 234, name: 'Union Ads' },
+                                { value: 147, name: 'Bing' },
+                                { value: 135, name: 'Video Ads' },
+                                { value: 102, name: 'Others' }
+                            ]
+                        }
+                    ]
+                };
+
+                option && myChart.setOption(option);
+
+            </script>
+        </div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="./static/css/btn.css" />
+    <link rel="shortcut icon" href="favicon.ico" />
+
+    <meta charset="UTF-8">
+    <title>主页</title>
+    <style>
+        body {
+            background-image: url("https://skywalkerpicture-1308654057.cos.ap-nanjing.myqcloud.com/img/202305202117272.jpg");
+            background-size: cover;
+            background-position: center 0%;
+            /* 垂直向下偏移50% */
+            background-repeat: no-repeat;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        /* Add additional CSS styles for your content here */
+        .content {
+            /* Example styles for content */
+            text-align: center;
+            padding: 20px;
+            color: #ffffff;
+            font-size: 24px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="content">
+        <h1>数据可视化作业</h1>
+        <p>计算机2006朱胜豪、王莹昊</p>
+
+        <button class="btn" onclick="redirectToPage()">跳转到页面</button>
+
+        <script>
+            function redirectToPage() {
+                window.location.href = "./page/index.html";
+            }
+        </script>
+    </div>
+</body>
+
+</html>

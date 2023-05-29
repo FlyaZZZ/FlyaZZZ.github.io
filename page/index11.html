@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>ECharts Map Example</title>
+    <script src="https://cdn.jsdelivr.net/npm/jquery"></script>
+    <script src="https://cdn.jsdelivr.net/npm/echarts"></script>
+    <script src="https://cdn.jsdelivr.net/npm/d3-array"></script>
+    <script src="https://cdn.jsdelivr.net/npm/d3-geo"></script>
+    <link rel="shortcut icon" href="favicon.ico" />
+    <style>
+        html,
+        body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            position: relative;
+        }
+
+        #navbar-container {
+            height: 70px;
+            background-color: #f2f2f2;
+            /* 导航栏样式 */
+            /* ... */
+        }
+
+        #main {
+            width: 800px;
+            height: 600px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+    </style>
+</head>
+
+
+
+<body>
+    <div id="navbar-container">
+        <!-- 导航栏 -->
+    </div>
+
+    <script>
+        // 使用 JavaScript 加载导航栏内容
+        window.addEventListener('DOMContentLoaded', function () {
+            var navbarContainer = document.getElementById('navbar-container');
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', './navgeo.html', true);
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    navbarContainer.innerHTML = xhr.responseText;
+                }
+            };
+            xhr.send();
+        });
+    </script>
+
+    <div id="main" style="width: 800px; height: 400px;"></div>
+    <script>
+
+
+    </script>
+
+</body>
+
+</html>

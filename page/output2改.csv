@@ -1,0 +1,453 @@
+State,Year,Count
+Alabama,2014,41
+Alabama,2015,35
+Alabama,2016,31
+Alabama,2017,51
+Alabama,2018,46
+Alabama,2019,106
+Alabama,2020,50
+Alabama,2021,63
+Alabama,2022,59
+Alaska,2014,5
+Alaska,2015,10
+Alaska,2016,9
+Alaska,2017,10
+Alaska,2018,2
+Alaska,2019,13
+Alaska,2020,2
+Alaska,2021,5
+Alaska,2022,5
+Arizona,2014,28
+Arizona,2015,21
+Arizona,2016,23
+Arizona,2017,23
+Arizona,2018,18
+Arizona,2019,55
+Arizona,2020,41
+Arizona,2021,34
+Arizona,2022,65
+Arkansas,2014,24
+Arkansas,2015,18
+Arkansas,2016,33
+Arkansas,2017,29
+Arkansas,2018,35
+Arkansas,2019,31
+Arkansas,2020,27
+Arkansas,2021,19
+Arkansas,2022,23
+California,2014,128
+California,2015,134
+California,2016,121
+California,2017,152
+California,2018,141
+California,2019,199
+California,2020,191
+California,2021,176
+California,2022,153
+Colorado,2014,20
+Colorado,2015,29
+Colorado,2016,27
+Colorado,2017,22
+Colorado,2018,23
+Colorado,2019,37
+Colorado,2020,18
+Colorado,2021,33
+Colorado,2022,42
+Connecticut,2014,21
+Connecticut,2015,27
+Connecticut,2016,22
+Connecticut,2017,25
+Connecticut,2018,28
+Connecticut,2019,15
+Connecticut,2020,12
+Connecticut,2021,9
+Connecticut,2022,7
+Delaware,2014,8
+Delaware,2015,20
+Delaware,2016,8
+Delaware,2017,11
+Delaware,2018,12
+Delaware,2019,14
+Delaware,2020,12
+Delaware,2021,8
+Delaware,2022,6
+District of Columbia,2014,37
+District of Columbia,2015,16
+District of Columbia,2016,10
+District of Columbia,2017,27
+District of Columbia,2018,16
+District of Columbia,2019,32
+District of Columbia,2020,16
+District of Columbia,2021,23
+District of Columbia,2022,19
+Florida,2014,112
+Florida,2015,96
+Florida,2016,176
+Florida,2017,130
+Florida,2018,140
+Florida,2019,222
+Florida,2020,113
+Florida,2021,93
+Florida,2022,120
+Georgia,2014,59
+Georgia,2015,113
+Georgia,2016,53
+Georgia,2017,64
+Georgia,2018,53
+Georgia,2019,126
+Georgia,2020,95
+Georgia,2021,80
+Georgia,2022,117
+Hawaii,2014,1
+Hawaii,2015,1
+Hawaii,2016,3
+Hawaii,2017,5
+Hawaii,2018,3
+Hawaii,2019,9
+Hawaii,2020,3
+Hawaii,2021,1
+Hawaii,2022,3
+Idaho,2014,8
+Idaho,2015,3
+Idaho,2016,3
+Idaho,2017,9
+Idaho,2019,7
+Idaho,2020,7
+Idaho,2021,3
+Idaho,2022,3
+Illinois,2014,154
+Illinois,2015,145
+Illinois,2016,173
+Illinois,2017,144
+Illinois,2018,125
+Illinois,2019,137
+Illinois,2020,93
+Illinois,2021,102
+Illinois,2022,89
+Indiana,2014,52
+Indiana,2015,56
+Indiana,2016,51
+Indiana,2017,53
+Indiana,2018,41
+Indiana,2019,73
+Indiana,2020,67
+Indiana,2021,59
+Indiana,2022,52
+Iowa,2014,16
+Iowa,2015,18
+Iowa,2016,14
+Iowa,2017,13
+Iowa,2018,19
+Iowa,2019,17
+Iowa,2020,7
+Iowa,2021,3
+Iowa,2022,11
+Kansas,2014,20
+Kansas,2015,12
+Kansas,2016,19
+Kansas,2017,20
+Kansas,2018,23
+Kansas,2019,35
+Kansas,2020,15
+Kansas,2021,12
+Kansas,2022,15
+Kentucky,2014,32
+Kentucky,2015,17
+Kentucky,2016,26
+Kentucky,2017,25
+Kentucky,2018,34
+Kentucky,2019,46
+Kentucky,2020,43
+Kentucky,2021,34
+Kentucky,2022,30
+Louisiana,2014,74
+Louisiana,2015,72
+Louisiana,2016,102
+Louisiana,2017,59
+Louisiana,2018,92
+Louisiana,2019,126
+Louisiana,2020,74
+Louisiana,2021,94
+Louisiana,2022,90
+Maine,2014,13
+Maine,2015,8
+Maine,2016,6
+Maine,2017,9
+Maine,2018,4
+Maine,2019,6
+Maine,2020,1
+Maine,2021,1
+Maine,2022,3
+Maryland,2014,48
+Maryland,2015,60
+Maryland,2016,52
+Maryland,2017,67
+Maryland,2018,69
+Maryland,2019,92
+Maryland,2020,49
+Maryland,2021,57
+Maryland,2022,53
+Massachusetts,2014,47
+Massachusetts,2015,41
+Massachusetts,2016,45
+Massachusetts,2017,52
+Massachusetts,2018,50
+Massachusetts,2019,21
+Massachusetts,2020,11
+Massachusetts,2021,18
+Massachusetts,2022,8
+Michigan,2014,55
+Michigan,2015,41
+Michigan,2016,44
+Michigan,2017,32
+Michigan,2018,43
+Michigan,2019,89
+Michigan,2020,77
+Michigan,2021,61
+Michigan,2022,61
+Minnesota,2014,12
+Minnesota,2015,10
+Minnesota,2016,15
+Minnesota,2017,13
+Minnesota,2018,8
+Minnesota,2019,16
+Minnesota,2020,20
+Minnesota,2021,17
+Minnesota,2022,20
+Mississippi,2014,25
+Mississippi,2015,25
+Mississippi,2016,29
+Mississippi,2017,46
+Mississippi,2018,38
+Mississippi,2019,62
+Mississippi,2020,34
+Mississippi,2021,46
+Mississippi,2022,40
+Missouri,2014,69
+Missouri,2015,42
+Missouri,2016,47
+Missouri,2017,61
+Missouri,2018,70
+Missouri,2019,110
+Missouri,2020,74
+Missouri,2021,60
+Missouri,2022,67
+Montana,2014,4
+Montana,2015,1
+Montana,2016,4
+Montana,2017,4
+Montana,2018,3
+Montana,2019,9
+Montana,2020,9
+Montana,2021,4
+Montana,2022,3
+Nebraska,2014,15
+Nebraska,2015,11
+Nebraska,2016,13
+Nebraska,2017,10
+Nebraska,2018,20
+Nebraska,2019,12
+Nebraska,2020,5
+Nebraska,2021,7
+Nebraska,2022,4
+Nevada,2014,11
+Nevada,2015,20
+Nevada,2016,9
+Nevada,2017,17
+Nevada,2018,8
+Nevada,2019,33
+Nevada,2020,22
+Nevada,2021,14
+Nevada,2022,22
+New Hampshire,2014,9
+New Hampshire,2015,5
+New Hampshire,2016,8
+New Hampshire,2017,5
+New Hampshire,2018,6
+New Hampshire,2019,3
+New Hampshire,2020,2
+New Hampshire,2021,1
+New Hampshire,2022,5
+New Jersey,2014,35
+New Jersey,2015,50
+New Jersey,2016,39
+New Jersey,2017,46
+New Jersey,2018,57
+New Jersey,2019,37
+New Jersey,2020,24
+New Jersey,2021,24
+New Jersey,2022,20
+New Mexico,2014,14
+New Mexico,2015,13
+New Mexico,2016,11
+New Mexico,2017,14
+New Mexico,2018,10
+New Mexico,2019,33
+New Mexico,2020,17
+New Mexico,2021,28
+New Mexico,2022,21
+New York,2014,134
+New York,2015,103
+New York,2016,71
+New York,2017,60
+New York,2018,70
+New York,2019,64
+New York,2020,41
+New York,2021,64
+New York,2022,50
+North Carolina,2014,104
+North Carolina,2015,79
+North Carolina,2016,84
+North Carolina,2017,76
+North Carolina,2018,71
+North Carolina,2019,105
+North Carolina,2020,77
+North Carolina,2021,76
+North Carolina,2022,71
+North Dakota,2014,3
+North Dakota,2015,5
+North Dakota,2016,3
+North Dakota,2017,2
+North Dakota,2018,3
+North Dakota,2021,1
+North Dakota,2022,3
+Ohio,2014,75
+Ohio,2015,90
+Ohio,2016,93
+Ohio,2017,89
+Ohio,2018,92
+Ohio,2019,134
+Ohio,2020,78
+Ohio,2021,75
+Ohio,2022,74
+Oklahoma,2014,18
+Oklahoma,2015,24
+Oklahoma,2016,34
+Oklahoma,2017,38
+Oklahoma,2018,28
+Oklahoma,2019,39
+Oklahoma,2020,14
+Oklahoma,2021,14
+Oklahoma,2022,18
+Oregon,2014,9
+Oregon,2015,14
+Oregon,2016,14
+Oregon,2017,27
+Oregon,2018,14
+Oregon,2019,15
+Oregon,2020,18
+Oregon,2021,21
+Oregon,2022,14
+Pennsylvania,2014,55
+Pennsylvania,2015,106
+Pennsylvania,2016,66
+Pennsylvania,2017,101
+Pennsylvania,2018,119
+Pennsylvania,2019,117
+Pennsylvania,2020,91
+Pennsylvania,2021,99
+Pennsylvania,2022,84
+Rhode Island,2014,5
+Rhode Island,2015,8
+Rhode Island,2016,6
+Rhode Island,2017,1
+Rhode Island,2018,8
+Rhode Island,2019,3
+Rhode Island,2020,4
+Rhode Island,2021,2
+Rhode Island,2022,2
+South Carolina,2014,49
+South Carolina,2015,59
+South Carolina,2016,57
+South Carolina,2017,74
+South Carolina,2018,59
+South Carolina,2019,107
+South Carolina,2020,42
+South Carolina,2021,54
+South Carolina,2022,53
+South Dakota,2014,4
+South Dakota,2015,2
+South Dakota,2016,4
+South Dakota,2017,2
+South Dakota,2018,1
+South Dakota,2019,2
+South Dakota,2020,4
+South Dakota,2021,4
+South Dakota,2022,1
+Tennessee,2014,66
+Tennessee,2015,67
+Tennessee,2016,75
+Tennessee,2017,62
+Tennessee,2018,65
+Tennessee,2019,117
+Tennessee,2020,79
+Tennessee,2021,67
+Tennessee,2022,73
+Texas,2014,119
+Texas,2015,107
+Texas,2016,141
+Texas,2017,86
+Texas,2018,113
+Texas,2019,293
+Texas,2020,201
+Texas,2021,193
+Texas,2022,173
+Utah,2014,9
+Utah,2015,5
+Utah,2016,15
+Utah,2017,6
+Utah,2018,5
+Utah,2019,11
+Utah,2020,11
+Utah,2021,8
+Utah,2022,13
+Vermont,2014,10
+Vermont,2015,7
+Vermont,2018,7
+Vermont,2019,2
+Vermont,2021,2
+Vermont,2022,2
+Virginia,2014,50
+Virginia,2015,75
+Virginia,2016,57
+Virginia,2017,39
+Virginia,2018,49
+Virginia,2019,67
+Virginia,2020,45
+Virginia,2021,74
+Virginia,2022,55
+Washington,2014,23
+Washington,2015,21
+Washington,2016,11
+Washington,2017,49
+Washington,2018,15
+Washington,2019,40
+Washington,2020,15
+Washington,2021,19
+Washington,2022,25
+West Virginia,2014,22
+West Virginia,2015,9
+West Virginia,2016,10
+West Virginia,2017,14
+West Virginia,2018,12
+West Virginia,2019,15
+West Virginia,2020,18
+West Virginia,2021,8
+West Virginia,2022,13
+Wisconsin,2014,44
+Wisconsin,2015,44
+Wisconsin,2016,30
+Wisconsin,2017,24
+Wisconsin,2018,30
+Wisconsin,2019,44
+Wisconsin,2020,28
+Wisconsin,2021,28
+Wisconsin,2022,37
+Wyoming,2014,3
+Wyoming,2015,4
+Wyoming,2016,2
+Wyoming,2017,1
+Wyoming,2018,1
+Wyoming,2019,1
+Wyoming,2021,1
+Wyoming,2022,2

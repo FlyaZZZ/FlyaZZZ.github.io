@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>各州趋势</title>
+    <script src="https://cdn.jsdelivr.net/npm/jquery"></script>
+    <script src="https://cdn.jsdelivr.net/npm/echarts"></script>
+    <script src="https://cdn.jsdelivr.net/npm/d3-array"></script>
+    <script src="https://cdn.jsdelivr.net/npm/d3-geo"></script>
+    <link rel="shortcut icon" href="favicon.ico" />
+    <style>
+        #main {
+            width: 800px;
+            height: 600px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+    </style>
+</head>
+
+
+
+<body>
+    <div id="navbar-container">
+        <!-- 导航栏 -->
+    </div>
+
+    <script>
+        // 使用 JavaScript 加载导航栏内容
+        window.addEventListener('DOMContentLoaded', function () {
+            var navbarContainer = document.getElementById('navbar-container');
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', './navgeo.html', true);
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    navbarContainer.innerHTML = xhr.responseText;
+                }
+            };
+            xhr.send();
+        });
+    </script>
+
+    <div id="main" style="width: 800px; height: 400px;"></div>
+    <script>
+
+        var chartDom = document.getElementById('main');
+        var myChart = echarts.init(chartDom);
+        var option;
+
+        const yearCount = 9; // 起始年份为2014，终止年份为2022
+        const stateCount = 50;
+        const xAxisData = [];
+        const customData = [];
+        const legendData = [];
+        const dataList = [];
+        legendData.push('trend');
+        const encodeY = [];
+        for (var i = 0; i < yearCount; i++) {
+            legendData.push(2014 + i + ''); // 起始年份为2014
+            dataList.push([]);
+            encodeY.push(1 + i);
+        }
+
+        // 数据填充操作
+        const data = [
+            { Year: 2014, State: 'Alabama', Count: 41 },
+            { Year: 2015, State: 'Alabama', Count: 35 },
+            { Year: 2016, State: 'Alabama', Count: 31 },
+            { Year: 2017, State: 'Alabama', Count: 51 },
+            { Year: 2018, State: 'Alabama', Count: 46 },
+            { Year: 2019, State: 'Alabama', Count: 106 },
+            { Year: 2020, State: 'Alabama', Count: 50 },
+            { Year: 2021, State: 'Alabama', Count: 63 },
+            { Year: 2022, State: 'Alabama', Count: 59 },
+            { Year: 2014, State: 'Alaska', Count: 5 },
+            { Year: 2015, State: 'Alaska', Count: 10 },
+            { Year: 2016, State: 'Alaska', Count: 9 },
+            { Year: 2017, State: 'Alaska', Count: 10 },
+            { Year: 2018, State: 'Alaska', Count: 2 },
+            { Year: 2019, State: 'Alaska', Count: 13 },
+            { Year: 2020, State: 'Alaska', Count: 2 },
+            { Year: 2021, State: 'Alaska', Count: 5 },
+            { Year: 2022, State: 'Alaska', Count: 5 },
+            { Year: 2014, State: 'Arizona', Count: 28 },
+            { Year: 2015, State: 'Arizona', Count: 21 },
+            { Year: 2016, State: 'Arizona', Count: 23 },
+            { Year: 2017, State: 'Arizona', Count: 23 },
+            { Year: 2018, State: 'Arizona', Count: 18 },
+            { Year: 2019, State: 'Arizona', Count: 55 },
+            { Year: 2020, State: 'Arizona', Count: 41 },
+            { Year: 2021, State: 'Arizona', Count: 34 },
+            { Year: 2022, State: 'Arizona', Count: 65 },
+            { Year: 2014, State: 'Arkansas', Count: 24 },
+            { Year: 2015, State: 'Arkansas', Count: 18 },
+            { Year: 2016, State: 'Arkansas', Count: 33 },
+            { Year: 2017, State: 'Arkansas', Count: 29 },
+            { Year: 2018, State: 'Arkansas', Count: 35 },
+            { Year: 2019, State: 'Arkansas', Count: 31 },
+            { Year: 2020, State: 'Arkansas', Count: 27 },
+            { Year: 2021, State: 'Arkansas', Count: 19 },
+            { Year: 2022, State: 'Arkansas', Count: 23 },
+            { Year: 2014, State: 'California', Count: 128 },
+            { Year: 2015, State: 'California', Count: 134 },
+            { Year: 2016, State: 'California', Count: 121 },
+            { Year: 2017, State: 'California', Count: 152 },
+            { Year: 2018, State: 'California', Count: 141 },
+            { Year: 2019, State: 'California', Count: 199 },
+            { Year: 2020, State: 'California', Count: 191 },
+            { Year: 2021, State: 'California', Count: 176 },
+            { Year: 2022, State: 'California', Count: 153 },
+            { Year: 2014, State: 'Colorado', Count: 20 },
+            { Year: 2015, State: 'Colorado', Count: 29 },
+            { Year: 2016, State: 'Colorado', Count: 27 },
+            { Year: 2017, State: 'Colorado', Count: 22 },
+            { Year: 2018, State: 'Colorado', Count: 23 },
+            { Year: 2019, State: 'Colorado', Count: 37 },
+            { Year: 2020, State: 'Colorado', Count: 18 },
+            { Year: 2021, State: 'Colorado', Count: 33 },
+            { Year: 2022, State: 'Colorado', Count: 42 },
+            { Year: 2014, State: 'Connecticut', Count: 21 },
+            { Year: 2015, State: 'Connecticut', Count: 27 },
+            { Year: 2016, State: 'Connecticut', Count: 22 },
+            { Year: 2017, State: 'Connecticut', Count: 25 },
+            { Year: 2018, State: 'Connecticut', Count: 28 },
+            { Year: 2019, State: 'Connecticut', Count: 15 },
+            { Year: 2020, State: 'Connecticut', Count: 12 },
+            { Year: 2021, State: 'Connecticut', Count: 9 },
+            { Year: 2022, State: 'Connecticut', Count: 7 },
+            { Year: 2014, State: 'Delaware', Count: 8 },
+            { Year: 2015, State: 'Delaware', Count: 20 },
+            { Year: 2016, State: 'Delaware', Count: 8 },
+            { Year: 2017, State: 'Delaware', Count: 11 },
+            { Year: 2018, State: 'Delaware', Count: 12 },
+            { Year: 2019, State: 'Delaware', Count: 14 },
+            { Year: 2020, State: 'Delaware', Count: 12 },
+            { Year: 2021, State: 'Delaware', Count: 8 },
+            { Year: 2022, State: 'Delaware', Count: 6 },
+            { Year: 2014, State: 'District of Columbia', Count: 37 },
+            { Year: 2015, State: 'District of Columbia', Count: 16 },
+            { Year: 2016, State: 'District of Columbia', Count: 10 },
+            { Year: 2017, State: 'District of Columbia', Count: 27 },
+            { Year: 2018, State: 'District of Columbia', Count: 16 },
+            { Year: 2019, State: 'District of Columbia', Count: 32 },
+            { Year: 2020, State: 'District of Columbia', Count: 16 },
+            { Year: 2021, State: 'District of Columbia', Count: 23 },
+            { Year: 2022, State: 'District of Columbia', Count: 19 },
+            { Year: 2014, State: 'Florida', Count: 112 },
+            { Year: 2015, State: 'Florida', Count: 96 },
+            { Year: 2016, State: 'Florida', Count: 176 },
+            { Year: 2017, State: 'Florida', Count: 130 },
+            { Year: 2018, State: 'Florida', Count: 140 },
+            { Year: 2019, State: 'Florida', Count: 222 },
+            { Year: 2020, State: 'Florida', Count: 113 },
+            { Year: 2021, State: 'Florida', Count: 93 },
+            { Year: 2022, State: 'Florida', Count: 120 },
+            { Year: 2014, State: 'Georgia', Count: 59 },
+            { Year: 2015, State: 'Georgia', Count: 113 },
+            { Year: 2016, State: 'Georgia', Count: 53 },
+            { Year: 2017, State: 'Georgia', Count: 64 },
+            { Year: 2018, State: 'Georgia', Count: 53 },
+            { Year: 2019, State: 'Georgia', Count: 126 },
+            { Year: 2020, State: 'Georgia', Count: 95 },
+            { Year: 2021, State: 'Georgia', Count: 80 },
+            { Year: 2022, State: 'Georgia', Count: 117 },
+            { Year: 2014, State: 'Hawaii', Count: 1 },
+            { Year: 2015, State: 'Hawaii', Count: 1 },
+            { Year: 2016, State: 'Hawaii', Count: 3 },
+            { Year: 2017, State: 'Hawaii', Count: 5 },
+            { Year: 2018, State: 'Hawaii', Count: 3 },
+            { Year: 2019, State: 'Hawaii', Count: 9 },
+            { Year: 2020, State: 'Hawaii', Count: 3 },
+            { Year: 2021, State: 'Hawaii', Count: 1 },
+            { Year: 2022, State: 'Hawaii', Count: 3 },
+            { Year: 2014, State: 'Idaho', Count: 8 },
+            { Year: 2015, State: 'Idaho', Count: 3 },
+            { Year: 2016, State: 'Idaho', Count: 3 },
+            { Year: 2017, State: 'Idaho', Count: 9 },
+            { Year: 2019, State: 'Idaho', Count: 7 },
+            { Year: 2020, State: 'Idaho', Count: 7 },
+            { Year: 2021, State: 'Idaho', Count: 3 },
+            { Year: 2022, State: 'Idaho', Count: 3 },
+            { Year: 2014, State: 'Illinois', Count: 154 },
+            { Year: 2015, State: 'Illinois', Count: 145 },
+            { Year: 2016, State: 'Illinois', Count: 173 },
+            { Year: 2017, State: 'Illinois', Count: 144 },
+            { Year: 2018, State: 'Illinois', Count: 125 },
+            { Year: 2019, State: 'Illinois', Count: 137 },
+            { Year: 2020, State: 'Illinois', Count: 93 },
+            { Year: 2021, State: 'Illinois', Count: 102 },
+            { Year: 2022, State: 'Illinois', Count: 89 },
+            { Year: 2014, State: 'Indiana', Count: 52 },
+            { Year: 2015, State: 'Indiana', Count: 56 },
+            { Year: 2016, State: 'Indiana', Count: 51 },
+            { Year: 2017, State: 'Indiana', Count: 53 },
+            { Year: 2018, State: 'Indiana', Count: 41 },
+            { Year: 2019, State: 'Indiana', Count: 73 },
+            { Year: 2020, State: 'Indiana', Count: 67 },
+            { Year: 2021, State: 'Indiana', Count: 59 },
+            { Year: 2022, State: 'Indiana', Count: 52 },
+            { Year: 2014, State: 'Iowa', Count: 16 },
+            { Year: 2015, State: 'Iowa', Count: 18 },
+            { Year: 2016, State: 'Iowa', Count: 14 },
+            { Year: 2017, State: 'Iowa', Count: 13 },
+            { Year: 2018, State: 'Iowa', Count: 19 },
+            { Year: 2019, State: 'Iowa', Count: 17 },
+            { Year: 2020, State: 'Iowa', Count: 7 },
+            { Year: 2021, State: 'Iowa', Count: 3 },
+            { Year: 2022, State: 'Iowa', Count: 11 },
+            { Year: 2014, State: 'Kansas', Count: 20 },
+            { Year: 2015, State: 'Kansas', Count: 12 },
+            { Year: 2016, State: 'Kansas', Count: 19 },
+            { Year: 2017, State: 'Kansas', Count: 20 },
+            { Year: 2018, State: 'Kansas', Count: 23 },
+            { Year: 2019, State: 'Kansas', Count: 35 },
+            { Year: 2020, State: 'Kansas', Count: 15 },
+            { Year: 2021, State: 'Kansas', Count: 12 },
+            { Year: 2022, State: 'Kansas', Count: 15 },
+            { Year: 2014, State: 'Kentucky', Count: 32 },
+            { Year: 2015, State: 'Kentucky', Count: 17 },
+            { Year: 2016, State: 'Kentucky', Count: 26 },
+            { Year: 2017, State: 'Kentucky', Count: 25 },
+            { Year: 2018, State: 'Kentucky', Count: 34 },
+            { Year: 2019, State: 'Kentucky', Count: 46 },
+            { Year: 2020, State: 'Kentucky', Count: 43 },
+            { Year: 2021, State: 'Kentucky', Count: 34 },
+            { Year: 2022, State: 'Kentucky', Count: 30 },
+            { Year: 2014, State: 'Louisiana', Count: 74 },
+            { Year: 2015, State: 'Louisiana', Count: 72 },
+            { Year: 2016, State: 'Louisiana', Count: 102 },
+            { Year: 2017, State: 'Louisiana', Count: 59 },
+            { Year: 2018, State: 'Louisiana', Count: 92 },
+            { Year: 2019, State: 'Louisiana', Count: 126 },
+            { Year: 2020, State: 'Louisiana', Count: 74 },
+            { Year: 2021, State: 'Louisiana', Count: 94 },
+            { Year: 2022, State: 'Louisiana', Count: 90 },
+            { Year: 2014, State: 'Maine', Count: 13 },
+            { Year: 2015, State: 'Maine', Count: 8 },
+            { Year: 2016, State: 'Maine', Count: 6 },
+            { Year: 2017, State: 'Maine', Count: 9 },
+            { Year: 2018, State: 'Maine', Count: 4 },
+            { Year: 2019, State: 'Maine', Count: 6 },
+            { Year: 2020, State: 'Maine', Count: 1 },
+            { Year: 2021, State: 'Maine', Count: 1 },
+            { Year: 2022, State: 'Maine', Count: 3 },
+            { Year: 2014, State: 'Maryland', Count: 48 },
+            { Year: 2015, State: 'Maryland', Count: 60 },
+            { Year: 2016, State: 'Maryland', Count: 52 },
+            { Year: 2017, State: 'Maryland', Count: 67 },
+            { Year: 2018, State: 'Maryland', Count: 69 },
+            { Year: 2019, State: 'Maryland', Count: 92 },
+            { Year: 2020, State: 'Maryland', Count: 49 },
+            { Year: 2021, State: 'Maryland', Count: 57 },
+            { Year: 2022, State: 'Maryland', Count: 53 },
+            { Year: 2014, State: 'Massachusetts', Count: 47 },
+            { Year: 2015, State: 'Massachusetts', Count: 41 },
+            { Year: 2016, State: 'Massachusetts', Count: 45 },
+            { Year: 2017, State: 'Massachusetts', Count: 52 },
+            { Year: 2018, State: 'Massachusetts', Count: 50 },
+            { Year: 2019, State: 'Massachusetts', Count: 21 },
+            { Year: 2020, State: 'Massachusetts', Count: 11 },
+            { Year: 2021, State: 'Massachusetts', Count: 18 },
+            { Year: 2022, State: 'Massachusetts', Count: 8 },
+            { Year: 2014, State: 'Michigan', Count: 55 },
+            { Year: 2015, State: 'Michigan', Count: 41 },
+            { Year: 2016, State: 'Michigan', Count: 44 },
+            { Year: 2017, State: 'Michigan', Count: 32 },
+            { Year: 2018, State: 'Michigan', Count: 43 },
+            { Year: 2019, State: 'Michigan', Count: 89 },
+            { Year: 2020, State: 'Michigan', Count: 77 },
+            { Year: 2021, State: 'Michigan', Count: 61 },
+            { Year: 2022, State: 'Michigan', Count: 61 },
+            { Year: 2014, State: 'Minnesota', Count: 12 },
+            { Year: 2015, State: 'Minnesota', Count: 10 },
+            { Year: 2016, State: 'Minnesota', Count: 15 },
+            { Year: 2017, State: 'Minnesota', Count: 13 },
+            { Year: 2018, State: 'Minnesota', Count: 8 },
+            { Year: 2019, State: 'Minnesota', Count: 16 },
+            { Year: 2020, State: 'Minnesota', Count: 20 },
+            { Year: 2021, State: 'Minnesota', Count: 17 },
+            { Year: 2022, State: 'Minnesota', Count: 20 },
+            { Year: 2014, State: 'Mississippi', Count: 25 },
+            { Year: 2015, State: 'Mississippi', Count: 25 },
+            { Year: 2016, State: 'Mississippi', Count: 29 },
+            { Year: 2017, State: 'Mississippi', Count: 46 },
+            { Year: 2018, State: 'Mississippi', Count: 38 },
+            { Year: 2019, State: 'Mississippi', Count: 62 },
+            { Year: 2020, State: 'Mississippi', Count: 34 },
+            { Year: 2021, State: 'Mississippi', Count: 46 },
+            { Year: 2022, State: 'Mississippi', Count: 40 },
+            { Year: 2014, State: 'Missouri', Count: 69 },
+            { Year: 2015, State: 'Missouri', Count: 42 },
+            { Year: 2016, State: 'Missouri', Count: 47 },
+            { Year: 2017, State: 'Missouri', Count: 61 },
+            { Year: 2018, State: 'Missouri', Count: 70 },
+            { Year: 2019, State: 'Missouri', Count: 110 },
+            { Year: 2020, State: 'Missouri', Count: 74 },
+            { Year: 2021, State: 'Missouri', Count: 60 },
+            { Year: 2022, State: 'Missouri', Count: 67 },
+            { Year: 2014, State: 'Montana', Count: 4 },
+            { Year: 2015, State: 'Montana', Count: 1 },
+            { Year: 2016, State: 'Montana', Count: 4 },
+            { Year: 2017, State: 'Montana', Count: 4 },
+            { Year: 2018, State: 'Montana', Count: 3 },
+            { Year: 2019, State: 'Montana', Count: 9 },
+            { Year: 2020, State: 'Montana', Count: 9 },
+            { Year: 2021, State: 'Montana', Count: 4 },
+            { Year: 2022, State: 'Montana', Count: 3 },
+            { Year: 2014, State: 'Nebraska', Count: 15 },
+            { Year: 2015, State: 'Nebraska', Count: 11 },
+            { Year: 2016, State: 'Nebraska', Count: 13 },
+            { Year: 2017, State: 'Nebraska', Count: 10 },
+            { Year: 2018, State: 'Nebraska', Count: 20 },
+            { Year: 2019, State: 'Nebraska', Count: 12 },
+            { Year: 2020, State: 'Nebraska', Count: 5 },
+            { Year: 2021, State: 'Nebraska', Count: 7 },
+            { Year: 2022, State: 'Nebraska', Count: 4 },
+            { Year: 2014, State: 'Nevada', Count: 11 },
+            { Year: 2015, State: 'Nevada', Count: 20 },
+            { Year: 2016, State: 'Nevada', Count: 9 },
+            { Year: 2017, State: 'Nevada', Count: 17 },
+            { Year: 2018, State: 'Nevada', Count: 8 },
+            { Year: 2019, State: 'Nevada', Count: 33 },
+            { Year: 2020, State: 'Nevada', Count: 22 },
+            { Year: 2021, State: 'Nevada', Count: 14 },
+            { Year: 2022, State: 'Nevada', Count: 22 },
+            { Year: 2014, State: 'New Hampshire', Count: 9 },
+            { Year: 2015, State: 'New Hampshire', Count: 5 },
+            { Year: 2016, State: 'New Hampshire', Count: 8 },
+            { Year: 2017, State: 'New Hampshire', Count: 5 },
+            { Year: 2018, State: 'New Hampshire', Count: 6 },
+            { Year: 2019, State: 'New Hampshire', Count: 3 },
+            { Year: 2020, State: 'New Hampshire', Count: 2 },
+            { Year: 2021, State: 'New Hampshire', Count: 1 },
+            { Year: 2022, State: 'New Hampshire', Count: 5 },
+            { Year: 2014, State: 'New Jersey', Count: 35 },
+            { Year: 2015, State: 'New Jersey', Count: 50 },
+            { Year: 2016, State: 'New Jersey', Count: 39 },
+            { Year: 2017, State: 'New Jersey', Count: 46 },
+            { Year: 2018, State: 'New Jersey', Count: 57 },
+            { Year: 2019, State: 'New Jersey', Count: 37 },
+            { Year: 2020, State: 'New Jersey', Count: 24 },
+            { Year: 2021, State: 'New Jersey', Count: 24 },
+            { Year: 2022, State: 'New Jersey', Count: 20 },
+            { Year: 2014, State: 'New Mexico', Count: 14 },
+            { Year: 2015, State: 'New Mexico', Count: 13 },
+            { Year: 2016, State: 'New Mexico', Count: 11 },
+            { Year: 2017, State: 'New Mexico', Count: 14 },
+            { Year: 2018, State: 'New Mexico', Count: 10 },
+            { Year: 2019, State: 'New Mexico', Count: 33 },
+            { Year: 2020, State: 'New Mexico', Count: 17 },
+            { Year: 2021, State: 'New Mexico', Count: 28 },
+            { Year: 2022, State: 'New Mexico', Count: 21 },
+            { Year: 2014, State: 'New York', Count: 134 },
+            { Year: 2015, State: 'New York', Count: 103 },
+            { Year: 2016, State: 'New York', Count: 71 },
+            { Year: 2017, State: 'New York', Count: 60 },
+            { Year: 2018, State: 'New York', Count: 70 },
+            { Year: 2019, State: 'New York', Count: 64 },
+            { Year: 2020, State: 'New York', Count: 41 },
+            { Year: 2021, State: 'New York', Count: 64 },
+            { Year: 2022, State: 'New York', Count: 50 },
+            { Year: 2014, State: 'North Carolina', Count: 104 },
+            { Year: 2015, State: 'North Carolina', Count: 79 },
+            { Year: 2016, State: 'North Carolina', Count: 84 },
+            { Year: 2017, State: 'North Carolina', Count: 76 },
+            { Year: 2018, State: 'North Carolina', Count: 71 },
+            { Year: 2019, State: 'North Carolina', Count: 105 },
+            { Year: 2020, State: 'North Carolina', Count: 77 },
+            { Year: 2021, State: 'North Carolina', Count: 76 },
+            { Year: 2022, State: 'North Carolina', Count: 71 },
+            { Year: 2014, State: 'North Dakota', Count: 3 },
+            { Year: 2015, State: 'North Dakota', Count: 5 },
+            { Year: 2016, State: 'North Dakota', Count: 3 },
+            { Year: 2017, State: 'North Dakota', Count: 2 },
+            { Year: 2018, State: 'North Dakota', Count: 3 },
+            { Year: 2021, State: 'North Dakota', Count: 1 },
+            { Year: 2022, State: 'North Dakota', Count: 3 },
+            { Year: 2014, State: 'Ohio', Count: 75 },
+            { Year: 2015, State: 'Ohio', Count: 90 },
+            { Year: 2016, State: 'Ohio', Count: 93 },
+            { Year: 2017, State: 'Ohio', Count: 89 },
+            { Year: 2018, State: 'Ohio', Count: 92 },
+            { Year: 2019, State: 'Ohio', Count: 134 },
+            { Year: 2020, State: 'Ohio', Count: 78 },
+            { Year: 2021, State: 'Ohio', Count: 75 },
+            { Year: 2022, State: 'Ohio', Count: 74 },
+            { Year: 2014, State: 'Oklahoma', Count: 18 },
+            { Year: 2015, State: 'Oklahoma', Count: 24 },
+            { Year: 2016, State: 'Oklahoma', Count: 34 },
+            { Year: 2017, State: 'Oklahoma', Count: 38 },
+            { Year: 2018, State: 'Oklahoma', Count: 28 },
+            { Year: 2019, State: 'Oklahoma', Count: 39 },
+            { Year: 2020, State: 'Oklahoma', Count: 14 },
+            { Year: 2021, State: 'Oklahoma', Count: 14 },
+            { Year: 2022, State: 'Oklahoma', Count: 18 },
+            { Year: 2014, State: 'Oregon', Count: 9 },
+            { Year: 2015, State: 'Oregon', Count: 14 },
+            { Year: 2016, State: 'Oregon', Count: 14 },
+            { Year: 2017, State: 'Oregon', Count: 27 },
+            { Year: 2018, State: 'Oregon', Count: 14 },
+            { Year: 2019, State: 'Oregon', Count: 15 },
+            { Year: 2020, State: 'Oregon', Count: 18 },
+            { Year: 2021, State: 'Oregon', Count: 21 },
+            { Year: 2022, State: 'Oregon', Count: 14 },
+            { Year: 2014, State: 'Pennsylvania', Count: 55 },
+            { Year: 2015, State: 'Pennsylvania', Count: 106 },
+            { Year: 2016, State: 'Pennsylvania', Count: 66 },
+            { Year: 2017, State: 'Pennsylvania', Count: 101 },
+            { Year: 2018, State: 'Pennsylvania', Count: 119 },
+            { Year: 2019, State: 'Pennsylvania', Count: 117 },
+            { Year: 2020, State: 'Pennsylvania', Count: 91 },
+            { Year: 2021, State: 'Pennsylvania', Count: 99 },
+            { Year: 2022, State: 'Pennsylvania', Count: 84 },
+            { Year: 2014, State: 'Rhode Island', Count: 5 },
+            { Year: 2015, State: 'Rhode Island', Count: 8 },
+            { Year: 2016, State: 'Rhode Island', Count: 6 },
+            { Year: 2017, State: 'Rhode Island', Count: 1 },
+            { Year: 2018, State: 'Rhode Island', Count: 8 },
+            { Year: 2019, State: 'Rhode Island', Count: 3 },
+            { Year: 2020, State: 'Rhode Island', Count: 4 },
+            { Year: 2021, State: 'Rhode Island', Count: 2 },
+            { Year: 2022, State: 'Rhode Island', Count: 2 },
+            { Year: 2014, State: 'South Carolina', Count: 49 },
+            { Year: 2015, State: 'South Carolina', Count: 59 },
+            { Year: 2016, State: 'South Carolina', Count: 57 },
+            { Year: 2017, State: 'South Carolina', Count: 74 },
+            { Year: 2018, State: 'South Carolina', Count: 59 },
+            { Year: 2019, State: 'South Carolina', Count: 107 },
+            { Year: 2020, State: 'South Carolina', Count: 42 },
+            { Year: 2021, State: 'South Carolina', Count: 54 },
+            { Year: 2022, State: 'South Carolina', Count: 53 },
+            { Year: 2014, State: 'South Dakota', Count: 4 },
+            { Year: 2015, State: 'South Dakota', Count: 2 },
+            { Year: 2016, State: 'South Dakota', Count: 4 },
+            { Year: 2017, State: 'South Dakota', Count: 2 },
+            { Year: 2018, State: 'South Dakota', Count: 1 },
+            { Year: 2019, State: 'South Dakota', Count: 2 },
+            { Year: 2020, State: 'South Dakota', Count: 4 },
+            { Year: 2021, State: 'South Dakota', Count: 4 },
+            { Year: 2022, State: 'South Dakota', Count: 1 },
+            { Year: 2014, State: 'Tennessee', Count: 66 },
+            { Year: 2015, State: 'Tennessee', Count: 67 },
+            { Year: 2016, State: 'Tennessee', Count: 75 },
+            { Year: 2017, State: 'Tennessee', Count: 62 },
+            { Year: 2018, State: 'Tennessee', Count: 65 },
+            { Year: 2019, State: 'Tennessee', Count: 117 },
+            { Year: 2020, State: 'Tennessee', Count: 79 },
+            { Year: 2021, State: 'Tennessee', Count: 67 },
+            { Year: 2022, State: 'Tennessee', Count: 73 },
+            { Year: 2014, State: 'Texas', Count: 119 },
+            { Year: 2015, State: 'Texas', Count: 107 },
+            { Year: 2016, State: 'Texas', Count: 141 },
+            { Year: 2017, State: 'Texas', Count: 86 },
+            { Year: 2018, State: 'Texas', Count: 113 },
+            { Year: 2019, State: 'Texas', Count: 293 },
+            { Year: 2020, State: 'Texas', Count: 201 },
+            { Year: 2021, State: 'Texas', Count: 193 },
+            { Year: 2022, State: 'Texas', Count: 173 },
+            { Year: 2014, State: 'Utah', Count: 9 },
+            { Year: 2015, State: 'Utah', Count: 5 },
+            { Year: 2016, State: 'Utah', Count: 15 },
+            { Year: 2017, State: 'Utah', Count: 6 },
+            { Year: 2018, State: 'Utah', Count: 5 },
+            { Year: 2019, State: 'Utah', Count: 11 },
+            { Year: 2020, State: 'Utah', Count: 11 },
+            { Year: 2021, State: 'Utah', Count: 8 },
+            { Year: 2022, State: 'Utah', Count: 13 },
+            { Year: 2014, State: 'Vermont', Count: 10 },
+            { Year: 2015, State: 'Vermont', Count: 7 },
+            { Year: 2018, State: 'Vermont', Count: 7 },
+            { Year: 2019, State: 'Vermont', Count: 2 },
+            { Year: 2021, State: 'Vermont', Count: 2 },
+            { Year: 2022, State: 'Vermont', Count: 2 },
+            { Year: 2014, State: 'Virginia', Count: 50 },
+            { Year: 2015, State: 'Virginia', Count: 75 },
+            { Year: 2016, State: 'Virginia', Count: 57 },
+            { Year: 2017, State: 'Virginia', Count: 39 },
+            { Year: 2018, State: 'Virginia', Count: 49 },
+            { Year: 2019, State: 'Virginia', Count: 67 },
+            { Year: 2020, State: 'Virginia', Count: 45 },
+            { Year: 2021, State: 'Virginia', Count: 74 },
+            { Year: 2022, State: 'Virginia', Count: 55 },
+            { Year: 2014, State: 'Washington', Count: 23 },
+            { Year: 2015, State: 'Washington', Count: 21 },
+            { Year: 2016, State: 'Washington', Count: 11 },
+            { Year: 2017, State: 'Washington', Count: 49 },
+            { Year: 2018, State: 'Washington', Count: 15 },
+            { Year: 2019, State: 'Washington', Count: 40 },
+            { Year: 2020, State: 'Washington', Count: 15 },
+            { Year: 2021, State: 'Washington', Count: 19 },
+            { Year: 2022, State: 'Washington', Count: 25 },
+            { Year: 2014, State: 'West Virginia', Count: 22 },
+            { Year: 2015, State: 'West Virginia', Count: 9 },
+            { Year: 2016, State: 'West Virginia', Count: 10 },
+            { Year: 2017, State: 'West Virginia', Count: 14 },
+            { Year: 2018, State: 'West Virginia', Count: 12 },
+            { Year: 2019, State: 'West Virginia', Count: 15 },
+            { Year: 2020, State: 'West Virginia', Count: 18 },
+            { Year: 2021, State: 'West Virginia', Count: 8 },
+            { Year: 2022, State: 'West Virginia', Count: 13 },
+            { Year: 2014, State: 'Wisconsin', Count: 44 },
+            { Year: 2015, State: 'Wisconsin', Count: 44 },
+            { Year: 2016, State: 'Wisconsin', Count: 30 },
+            { Year: 2017, State: 'Wisconsin', Count: 24 },
+            { Year: 2018, State: 'Wisconsin', Count: 30 },
+            { Year: 2019, State: 'Wisconsin', Count: 44 },
+            { Year: 2020, State: 'Wisconsin', Count: 28 },
+            { Year: 2021, State: 'Wisconsin', Count: 28 },
+            { Year: 2022, State: 'Wisconsin', Count: 37 },
+            { Year: 2014, State: 'Wyoming', Count: 3 },
+            { Year: 2015, State: 'Wyoming', Count: 4 },
+            { Year: 2016, State: 'Wyoming', Count: 2 },
+            { Year: 2017, State: 'Wyoming', Count: 1 },
+            { Year: 2018, State: 'Wyoming', Count: 1 },
+            { Year: 2019, State: 'Wyoming', Count: 1 },
+            { Year: 2021, State: 'Wyoming', Count: 1 },
+            { Year: 2022, State: 'Wyoming', Count: 2 },
+        ];
+
+        // 根据州进行分组
+        const stateDataMap = {};
+        for (const item of data) {
+            const state = item.State;
+            if (!stateDataMap[state]) {
+                stateDataMap[state] = [];
+            }
+            stateDataMap[state].push(item);
+        }
+
+        // 填充xAxisData和customData
+        for (const state in stateDataMap) {
+            xAxisData.push(state); // 使用州的名称
+            var customVal = [xAxisData.length - 1]; // 使用当前xAxisData的长度作为索引
+            customData.push(customVal);
+            for (var j = 0; j < dataList.length; j++) {
+                var year = 2014 + j; // 起始年份为2014
+                var count = getDataByYearAndState(year, stateDataMap[state]); // 获取特定年份和州的数据
+                dataList[j].push(count);
+                customVal.push(count);
+            }
+        }
+
+        // 根据年份和州获取数据的辅助函数
+        function getDataByYearAndState(year, stateData) {
+            for (var i = 0; i < stateData.length; i++) {
+                if (stateData[i].Year === year) {
+                    return stateData[i].Count;
+                }
+            }
+            return 0; // 如果数据不存在，则默认为0
+        }
+
+        option = {
+            tooltip: {
+                trigger: 'axis'
+            },
+            legend: {
+                data: legendData
+            },
+            dataZoom: [
+                {
+                    type: 'slider',
+                    start: 50,
+                    end: 70
+                },
+                {
+                    type: 'inside',
+                    start: 50,
+                    end: 70
+                }
+            ],
+            xAxis: {
+                data: xAxisData
+            },
+            yAxis: {},
+            series: [
+                {
+                    type: 'custom',
+                    name: 'trend',
+                    renderItem: function (params, api) {
+                        var xValue = api.value(0);
+                        var currentSeriesIndices = api.currentSeriesIndices();
+                        var barLayout = api.barLayout({
+                            barGap: '30%',
+                            barCategoryGap: '20%',
+                            count: currentSeriesIndices.length - 1
+                        });
+                        var points = [];
+                        for (var i = 0; i < currentSeriesIndices.length; i++) {
+                            var seriesIndex = currentSeriesIndices[i];
+                            if (seriesIndex !== params.seriesIndex) {
+                                var point = api.coord([xValue, api.value(seriesIndex)]);
+                                point[0] += barLayout[i - 1].offsetCenter;
+                                point[1] -= 20;
+                                points.push(point);
+                            }
+                        }
+                        var style = api.style({
+                            stroke: api.visual('color'),
+                            fill: 'none'
+                        });
+                        return {
+                            type: 'polyline',
+                            shape: {
+                                points: points
+                            },
+                            style: style
+                        };
+                    },
+                    itemStyle: {
+                        borderWidth: 2
+                    },
+                    encode: {
+                        x: 0,
+                        y: encodeY
+                    },
+                    data: customData,
+                    z: 100
+                },
+                ...dataList.map(function (data, index) {
+                    return {
+                        type: 'bar',
+                        animation: false,
+                        name: legendData[index + 1],
+                        itemStyle: {
+                            opacity: 0.5
+                        },
+                        data: data
+                    };
+                })
+            ]
+        };
+
+        option && myChart.setOption(option);
+
+    </script>
+
+</body>
+
+</html>
