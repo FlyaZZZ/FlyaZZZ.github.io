@@ -1,130 +1,205 @@
+
 <!DOCTYPE html>
 <html lang="en">
    <head>
       <meta charset="UTF-8">
       <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <link rel="stylesheet" href="../static/css/change.css" />
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/echarts/5.2.1/echarts.min.js"></script>
       <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-      <title>Population Density of China</title>
+      <title>五一期间全国各省接待旅游人数</title>
    </head>
    <body>
-      <div id="container" style="width: 100%; height: 80vh"></div>
+      <div id="container" style="width: 100%; height: 80vh"></div> 
+      <div class="btn-container">
+         <button id="switchBtn" class="btn" >切换图表</button>
+     </div>
+      <div style="text-align:center;font-size:15px;font-weight:bold;margin-top:20px;">
+         旅游人数最多的省份：河南省，共接待游客5518万人次。</div>
+      <div style="text-align:center;font-size:15px;font-weight:bold;margin-top:20px;">
+         旅游收入最多的省份：浙江省，总收入为369.7亿元。</div>
       <!-- <div id="container" style="width: 100%; height: 100%"></div> -->
       <script>
          var chartDom = document.getElementById('container');
          var myChart = echarts.init(chartDom);
-         var option;
-
-         myChart.showLoading();
-         $.getJSON('../static/json/China.json', function (geoJson) {
-            myChart.hideLoading();
-            echarts.registerMap('China', geoJson);
-            // 对省份进行排序，并获取前十个省份
-            let provinces = geoJson.features.map((v) => ({name: v.properties.name, value: Math.round(Math.random()*1000)}));
-            provinces = provinces.sort((v1,v2) => v2.value - v1.value).slice(0, 10);
-
-
-            
-            myChart.setOption(
-            (option = {
-               title: {
-                  text: '五一期间全国各省份接待游客数量（2023）',
-                  subtext: '单位：万人次',
-               },
-               tooltip: {
-                  trigger: 'item',
-                  formatter: '{b}<br/>{c} 万人次',
-               },
-               toolbox: {
-                  feature: {
-                     dataView: {readOnly: false},
-                     restore: {},
-                     saveAsImage: {}
-                  }
-               },
-               visualMap: {
-                  min: 0,
-                  max: 5600,
-                  text: ['High', 'Low'],
-                  realtime: false,
-                  calculable: true,
-                  inRange: {
-                     color: ['lightskyblue', 'yellow', 'red']
-                  }
-               },
-               series: {
-                  name: 'Population Density',
-                  type: 'map',
-                  map: 'China',
-                  label: 
-                  {
-                     show: true,
-                     position: 'right',
-                     offset: [10, 0],
-                     fontSize: 10,
-                     fontWeight: 'bold',
-                     color: 'white',
-                     textShadowColor: 'black',
-                     textShadowBlur: 2,
-                     emphasis: {
-                        show: true,
-                        fontSize: 16,
-                        fontWeight: 'bold',
-                        itemStyle: {
-                           areaColor: 'black'
-                        }
-                     },
-                     formatter: function(param) {
-                        var name = param.name;
-                        if(name == '黑龙江省' || name == '内蒙古自治区') return name.substring(0,3);
-                        else
-                        return name.substring(0,2);
+         var dataPop=[
+                        { name: '北京市',         value: 912.8 }, 
+                        { name: '天津市',         value: 1103.85 },
+                        { name: '河北省',         value: 2433.5 }, 
+                        { name: '山西省',         value: 2371.2 }, 
+                        { name: '内蒙古自治区',    value: 1106.75 }, 
+                        { name: '辽宁省',          value: 1601.35 }, 
+                        { name: '吉林省',          value: 893.71 }, 
+                        { name: '黑龙江省',        value: 1166.9 }, 
+                        { name: '上海市',          value: 1664.94  }, 
+                        { name: '江苏省',          value: 3988.18 }, 
+                        { name: '浙江省',          value: 2125 }, 
+                        { name: '安徽省',          value: 2044.35 }, 
+                        { name: '福建省',          value: 2644.32 }, 
+                        { name: '江西省',          value: 2895.41 }, 
+                        { name: '山东省',          value: 1916.3 }, 
+                        { name: '河南省',          value: 5518}, 
+                        { name: '湖北省',          value: 1296 }, 
+                        { name: '湖南省',          value: 1457.52 }, 
+                        { name: '广东省',          value: 4516.1 }, 
+                        { name: '广西壮族自治区',   value: 2892.39 }, 
+                        { name: '海南省',          value: 320.37 }, 
+                        { name: '重庆市',          value: 641.26 }, 
+                        { name: '四川省',          value: 4018.34 }, 
+                        { name: '贵州省',          value: 2038.36 }, 
+                        { name: '云南省',          value: 3501.3 }, 
+                        { name: '西藏自治区',       value: 116.77 }, 
+                        { name: '陕西省',          value: 1130.51 }, 
+                        { name: '甘肃省',          value: 2030 }, 
+                        { name: '青海省',          value: 261.2 }, 
+                        { name: '宁夏回族自治区',   value: 478.82 }, 
+                        { name: '新疆维吾尔自治区', value: 806.2 }, 
+                        { name: '台湾省',          value: 31.2 }, 
+                        { name: '香港特别行政区',   value: 62.55 }, 
+                        { name: '澳门特别行政区',   value: 49.2 }
+                     ];
+         var dataMoney=[
+                        { name: '北京市',         value: 134.6 }, 
+                        { name: '天津市',         value: 57.58 },
+                        { name: '河北省',         value: NaN }, 
+                        { name: '山西省',         value: NaN }, 
+                        { name: '内蒙古自治区',    value: 60.13 }, 
+                        { name: '辽宁省',          value: 136.1 }, 
+                        { name: '吉林省',          value: 67.11 }, 
+                        { name: '黑龙江省',        value: NaN }, 
+                        { name: '上海市',          value: 188.97  }, 
+                        { name: '江苏省',          value: 310.08 }, 
+                        { name: '浙江省',          value: 369.7 }, 
+                        { name: '安徽省',          value: NaN }, 
+                        { name: '福建省',          value: 195.67 }, 
+                        { name: '江西省',          value: NaN }, 
+                        { name: '山东省',          value: NaN }, 
+                        { name: '河南省',          value: 310.1}, 
+                        { name: '湖北省',          value: 43.23 }, 
+                        { name: '湖南省',          value: NaN }, 
+                        { name: '广东省',          value: 274.4 }, 
+                        { name: '广西壮族自治区',   value: 205.48 }, 
+                        { name: '海南省',          value: 42.32 }, 
+                        { name: '重庆市',          value: 641.26 }, 
+                        { name: '四川省',          value: 201.23 }, 
+                        { name: '贵州省',          value: NaN }, 
+                        { name: '云南省',          value: 349.6 }, 
+                        { name: '西藏自治区',       value: 116.77 }, 
+                        { name: '陕西省',          value: NaN }, 
+                        { name: '甘肃省',          value: 109 }, 
+                        { name: '青海省',          value: 11.78 }, 
+                        { name: '宁夏回族自治区',   value: 30.36 }, 
+                        { name: '新疆维吾尔自治区', value: 60.34 }, 
+                        { name: '台湾省',          value: NaN }, 
+                        { name: '香港特别行政区',   value: NaN }, 
+                        { name: '澳门特别行政区',   value: NaN }
+                     ];
+         var titleMoney=
+         {
+            text: '五一期间全国各省份旅游收入（2023）',
+            subtext: '单位：亿元',
+            left:'20%'
+         };
+         var titlePop=
+         {
+            text: '五一期间全国各省份接待游客数量（2023）',
+            subtext: '单位：万人次',
+            left:'20%'
+         };
+         var tooltipPop={
+            trigger: 'item',
+            formatter: '{b}<br/>{c} 万人次',
+         };
+         var tooltipMoney={
+            trigger: 'item',
+            formatter: '{b}<br/>{c} 亿元',
+         };        
+         var maxPop=5600;
+         var maxMoney=370;
+         var option= {
+                  title: titlePop,
+                  tooltip: tooltipPop,
+                  toolbox: {
+                     feature: {
+                        dataView: {readOnly: false},
+                        restore: {},
+                        saveAsImage: {}
                      }
                   },
-                  data: [
-                     { name: '北京市',         value: 912.8 }, 
-                     { name: '天津市',         value: 1103.85 },
-                     { name: '河北省',         value: 2433.5 }, 
-                     { name: '山西省',         value: 2371.2 }, 
-                     { name: '内蒙古自治区',    value: 1106.75 }, 
-                     { name: '辽宁省',          value: 1601.35 }, 
-                     { name: '吉林省',          value: 893.71 }, 
-                     { name: '黑龙江省',        value: 1166.9 }, 
-                     { name: '上海市',          value: 1664.94  }, 
-                     { name: '江苏省',          value: 3988.18 }, 
-                     { name: '浙江省',          value: 2125 }, 
-                     { name: '安徽省',          value: 2044.35 }, 
-                     { name: '福建省',          value: 2644.32 }, 
-                     { name: '江西省',          value: 2895.41 }, 
-                     { name: '山东省',          value: 1916.3 }, 
-                     { name: '河南省',          value: 5518}, 
-                     { name: '湖北省',          value: 1296 }, 
-                     { name: '湖南省',          value: 1457.52 }, 
-                     { name: '广东省',          value: 4516.1 }, 
-                     { name: '广西壮族自治区',   value: 2892.39 }, 
-                     { name: '海南省',          value: 320.37 }, 
-                     { name: '重庆市',          value: 641.26 }, 
-                     { name: '四川省',          value: 4018.34 }, 
-                     { name: '贵州省',          value: 2038.36 }, 
-                     { name: '云南省',          value: 3501.3 }, 
-                     { name: '西藏自治区',       value: 1132.99 }, 
-                     { name: '陕西省',          value: 1130.51 }, 
-                     { name: '甘肃省',          value: 2030 }, 
-                     { name: '青海省',          value: 261.2 }, 
-                     { name: '宁夏回族自治区',   value: 478.82 }, 
-                     { name: '新疆维吾尔自治区', value: 806.2 }, 
-                     { name: '台湾省',          value: 0 }, 
-                     { name: '香港特别行政区',   value: 461 }, 
-                     { name: '澳门特别行政区',   value: 49 }
-                  ],
-                  
-               }
-            })
-            );
-         });
+                  visualMap: {
+                     min: 0,
+                     max: maxPop,
+                     text: ['High', 'Low'],
+                     realtime: false,
+                     left: '20%',
+                     calculable: true,
+                     inRange: {
+                        color: ['lightskyblue', 'yellow', 'red']
+                     }
+                  },
+                  series: {
+                     name: '五一期间全国各省接待旅游人数',
+                     type: 'map',
+                     map: 'China',
+                     label: 
+                     {
+                        show: true,
+                        position: 'right',
+                        offset: [10, 0],
+                        fontSize: 10,
+                        fontWeight: 'bold',
+                        color: 'white',
+                        textShadowColor: 'black',
+                        textShadowBlur: 2,
+                        emphasis: 
+                        {
+                           show: true,
+                           fontSize: 16,
+                           fontWeight: 'bold',
+                           itemStyle: {
+                              areaColor: 'black'
+                           }
+                        },
+                        formatter: function(param) {
+                           var name = param.name;
+                           if(name == '黑龙江省' || name == '内蒙古自治区') return name.substring(0,3);
+                           else
+                           return name.substring(0,2);
+                        }
+                     },
+                     data: dataPop
+                  }
+               };
 
-         option && myChart.setOption(option);
+         myChart.showLoading();
+
+         $.getJSON('../static/json/China.json', 
+            function (geoJson) 
+            {
+               myChart.hideLoading();
+               echarts.registerMap('China', geoJson);
+
+
+               option&&myChart.setOption(option);
+               // 获取按钮元素
+               var switchBtn = document.getElementById('switchBtn');
+
+               // 添加按钮点击事件监听器
+               switchBtn.addEventListener('click', function () {
+                     // 切换图表数据
+                     option.series.data = option.series.data === dataPop ? dataMoney : dataPop;
+                     option.title = option.title === titlePop ? titleMoney : titlePop;
+                     option.visualMap.max = option.visualMap.max === maxPop ? maxMoney : maxPop;
+                     option.tooltip = option.tooltip === tooltipPop ? tooltipMoney : tooltipPop;
+                     option&&myChart.setOption(option, true);
+                  }
+               );
+
+            }
+         );
+         
+         // option && myChart.setOption(option);
       </script>
    </body>
 </html>
