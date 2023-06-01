@@ -27,22 +27,27 @@
             /* Example styles for content */
             text-align: center;
             padding: 20px;
-            color: #ffffff;
+            color: #d2cd36;
             font-size: 24px;
+            position: fixed; 
+            top: 150px;
+            transition: font-size 0.3s ease-in-out;
         }
+        .content:hover {
+            font-size: 30px;
+            transition: font-size 0.3s ease-in-out;
+        }
+        
     </style>
 </head>
 
 <body>
-    <div class="content">
-        <h1>五一旅游数据可视化分析（2023）</h1>
-        <p>计实验2001赵亚飞</p>
-
-        <button class="btn" onclick="redirectToPage()">Go</button>
-
+    <div class="content" onclick="redirectToPage()">
+        <h1>五一旅游数据可视化展示（2023）</h1>
+        
         <script>
             function redirectToPage() {
-                window.location.href = "./page/index.html";
+                window.location.href = "./page/home.html";
             }
         </script>
     </div>

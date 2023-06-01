@@ -1,5 +1,5 @@
 .btn {
-    background-color: rgb(21, 214, 50);
+    /* background-color: rgb(21, 214, 50); */
     color: white;
     border-radius: 5px;
     border: none;
@@ -8,6 +8,6 @@
   }
   
 .btn:hover {
-  background-color: lightblue;
+  background-color: rgb(133, 199, 199);
 }
 .btn-container { position: fixed; bottom: 10px; right: 10px; }

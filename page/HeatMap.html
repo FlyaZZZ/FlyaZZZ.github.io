@@ -8,18 +8,41 @@
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/echarts/5.2.1/echarts.min.js"></script>
       <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+      
       <title>五一期间全国各省接待旅游人数</title>
    </head>
    <body>
+
+
+      <div id="navbar-container">
+         <!-- 导航栏 -->
+     </div>
+ 
+     <script>
+         // 使用 JavaScript 加载导航栏内容
+         window.addEventListener('DOMContentLoaded', function () {
+             var navbarContainer = document.getElementById('navbar-container');
+             var xhr = new XMLHttpRequest();
+             xhr.open('GET', './navgeo.html', true);
+             xhr.onreadystatechange = function () {
+                 if (xhr.readyState === 4 && xhr.status === 200) {
+                     navbarContainer.innerHTML = xhr.responseText;
+                 }
+             };
+             xhr.send();
+         });
+     </script>
+
+
       <div id="container" style="width: 100%; height: 80vh"></div> 
+      
       <div class="btn-container">
          <button id="switchBtn" class="btn" >切换图表</button>
-     </div>
-      <div style="text-align:center;font-size:15px;font-weight:bold;margin-top:20px;">
+      </div>
+      <!-- <div style="text-align:center;font-size:15px;font-weight:bold;margin-top:20px;">
          旅游人数最多的省份：河南省，共接待游客5518万人次。</div>
       <div style="text-align:center;font-size:15px;font-weight:bold;margin-top:20px;">
-         旅游收入最多的省份：浙江省，总收入为369.7亿元。</div>
-      <!-- <div id="container" style="width: 100%; height: 100%"></div> -->
+         旅游收入最多的省份：浙江省，总收入为369.7亿元。</div> -->
       <script>
          var chartDom = document.getElementById('container');
          var myChart = echarts.init(chartDom);
@@ -99,13 +122,15 @@
          {
             text: '五一期间全国各省份旅游收入（2023）',
             subtext: '单位：亿元',
-            left:'20%'
+            left:'20%',
+            top:'30px'
          };
          var titlePop=
          {
             text: '五一期间全国各省份接待游客数量（2023）',
             subtext: '单位：万人次',
-            left:'20%'
+            left:'20%',
+            top:'30px'
          };
          var tooltipPop={
             trigger: 'item',
