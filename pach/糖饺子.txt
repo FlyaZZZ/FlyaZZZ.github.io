@@ -1,0 +1,2 @@
+{'id': 11, 'name': '糖饺子', 'introduce': ['糖饺子是流传于湖南长沙市井的特色小吃，把糯米团搓成像饺子的形状，往油锅里一炸外表就像一个个饺子一样，然后再在表面撒一层白砂糖，吃起来香甜酥脆。\r\n                '], 'img': [<a href="javascript:void(0)">
+<img alt="" src="https://dimg04.c-ctrip.com/images/0101a120009m1ujrj1E2D_R_510_300.png"/></a>], 'city': '长沙'}

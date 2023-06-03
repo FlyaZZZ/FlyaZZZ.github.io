@@ -1,0 +1,2 @@
+{'id': 12, 'name': '紫苏桃子姜', 'introduce': ['紫苏桃子姜是长沙的特色美食，桃子的甜脆染上了姜的辛香和紫苏的回香,说不出的清奇之感,是很好的解腻圣品，酸甜又开胃，夏日消暑必备的甜品。\r\n                '], 'img': [<a href="javascript:void(0)">
+<img alt="" src="https://dimg04.c-ctrip.com/images/01031120009m1x8ltAE15_R_510_300.png"/></a>], 'city': '长沙'}
