@@ -6,7 +6,7 @@
     <title>热图</title>
     <script type="text/javascript" src="../static/js/echarts.min.js"></script>
     <script type="text/javascript" src="../static/js/api.js"></script>
-    <!-- <script src="https://api.map.baidu.com/getscript?v=3.0&ak=qfOxocyl9QAsL4OxW49BffT2kPCpMRYu"></script> -->
+    <script src="https://api.map.baidu.com/getscript?v=3.0&ak=qfOxocyl9QAsL4OxW49BffT2kPCpMRYu"></script>
     <script type="text/javascript" src="../static/js/bmap.min.js"></script>
 
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
@@ -24,11 +24,11 @@
 </head>
 
 <body>
-    <!-- <div id="navbar-container"> -->
+    <div id="navbar-container">
     <!-- 导航栏 -->
-    <!-- </div> -->
+    </div>
 
-    <!-- <script>
+    <script>
         // 使用 JavaScript 加载导航栏内容
         window.addEventListener('DOMContentLoaded', function () {
             var navbarContainer = document.getElementById('navbar-container');
@@ -41,9 +41,9 @@
             };
             xhr.send();
         });
-    </script> -->
+    </script> 
 
-    <div id="main" style="width: 1000px; height: 500px;"></div>
+    <div id="main" style="width: 1400px; height: 600px;"></div>
     <script>
         var chartDom = document.getElementById('main');
         var myChart = echarts.init(chartDom);
@@ -710,10 +710,10 @@
         };
         option = {
             title: {
-                text: '全国主要城市空气质量 - 百度地图',
-                subtext: 'data from PM25.in',
-                sublink: 'http://www.pm25.in',
-                left: 'center'
+                text: '全国主要城市旅游热度',
+                subtext: '数据来自“携程旅行”',
+                sublink: 'https://you.ctrip.com/',
+                left: 'left'
             },
             tooltip: {
                 trigger: 'item'
@@ -728,7 +728,7 @@
                             featureType: 'water',
                             elementType: 'all',
                             stylers: {
-                                color: '#d1d1d1'
+                                color: '#a2cffc'
                             }
                         },
                         {
@@ -773,6 +773,7 @@
                                 color: '#fefefe'
                             }
                         },
+
                         {
                             featureType: 'poi',
                             elementType: 'all',
@@ -787,6 +788,7 @@
                                 visibility: 'off'
                             }
                         },
+
                         {
                             featureType: 'subway',
                             elementType: 'all',
@@ -841,12 +843,13 @@
             },
             series: [
                 {
-                    name: 'pm2.5',
+                    name: '热度值',
                     type: 'scatter',
                     coordinateSystem: 'bmap',
                     data: convertData(data),
                     symbolSize: function (val) {
-                        return val[2] / 10000;
+                        // return val[2] / 10000;
+                        return Math.log(val[2]);
                     },
                     encode: {
                         value: 2
@@ -863,18 +866,19 @@
                     }
                 },
                 {
-                    name: 'Top 5',
+                    name: 'Top 10',
                     type: 'effectScatter',
                     coordinateSystem: 'bmap',
                     data: convertData(
-                        data
-                            .sort(function (a, b) {
+                        data.sort(function (a, b) {
                                 return b.value - a.value;
                             })
-                            .slice(0, 6)
+                            .slice(0, 11)
                     ),
                     symbolSize: function (val) {
-                        return val[2] / 10000;
+                        // return val[2] / 10000;
+                        return Math.log(val[2]);
+
                     },
                     encode: {
                         value: 2
@@ -899,12 +903,9 @@
                 }
             ]
         };
-
+       
+        // option.bmap.center = undefined;
         option && myChart.setOption(option);
-
-
-
-
 
 
 
