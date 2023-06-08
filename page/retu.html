@@ -848,8 +848,8 @@
                     coordinateSystem: 'bmap',
                     data: convertData(data),
                     symbolSize: function (val) {
-                        // return val[2] / 500000;
-                        return Math.log(val[2]);
+                        return val[2] / 500000;
+                        // return Math.log(val[2]);
                     },
                     encode: {
                         value: 2
@@ -876,8 +876,8 @@
                             .slice(0, 11)
                     ),
                     symbolSize: function (val) {
-                        // return val[2] / 500000;
-                        return Math.log(val[2]);
+                        return val[2] / 500000;
+                        // return Math.log(val[2]);
 
                     },
                     encode: {
