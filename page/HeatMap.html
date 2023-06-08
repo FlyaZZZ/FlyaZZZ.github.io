@@ -9,8 +9,11 @@
    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/echarts/5.2.1/echarts.min.js"></script>
    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
-   <title>五一期间全国各省接待旅游人数</title>
+   <title>五一期间全国各省旅游数据</title>
 </head>
+
+
+
 
 <body>
 
@@ -40,13 +43,12 @@
    <div class="btn-container">
       <button id="switchBtn" class="btn">切换图表</button>
    </div>
-   <!-- <div style="text-align:center;font-size:15px;font-weight:bold;margin-top:20px;">
-         旅游人数最多的省份：河南省，共接待游客5518万人次。</div>
-      <div style="text-align:center;font-size:15px;font-weight:bold;margin-top:20px;">
-         旅游收入最多的省份：浙江省，总收入为369.7亿元。</div> -->
+
    <script>
       var chartDom = document.getElementById('container');
       var myChart = echarts.init(chartDom);
+
+
       var dataPop = [
          { name: '北京市', value: 912.8 },
          { name: '天津市', value: 1103.85 },
@@ -143,6 +145,7 @@
       };
       var maxPop = 5600;
       var maxMoney = 370;
+
       var option = {
          title: titlePop,
          tooltip: tooltipPop,
@@ -199,14 +202,14 @@
       };
 
       myChart.showLoading();
-
       $.getJSON('../static/json/China.json',
          function (geoJson) {
             myChart.hideLoading();
+
             echarts.registerMap('China', geoJson);
-
-
             option && myChart.setOption(option);
+
+
             // 获取按钮元素
             var switchBtn = document.getElementById('switchBtn');
 
@@ -218,13 +221,11 @@
                option.visualMap.max = option.visualMap.max === maxPop ? maxMoney : maxPop;
                option.tooltip = option.tooltip === tooltipPop ? tooltipMoney : tooltipPop;
                option && myChart.setOption(option, true);
-            }
-            );
-
+            });
          }
       );
 
-         // option && myChart.setOption(option);
+         option && myChart.setOption(option);
    </script>
 </body>
 
