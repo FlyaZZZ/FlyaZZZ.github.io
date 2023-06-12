@@ -53,96 +53,103 @@
 
     <div id="main" style="width: 800px; height: 400px;"></div>
     <script>
-        var ROOT_PATH = 'https://echarts.apache.org/examples';
-
         var chartDom = document.getElementById('main');
         var myChart = echarts.init(chartDom);
         var option;
 
-        $.get('../static/json/life-expectancy-table.json', function (_rawData) {
-            run(_rawData);
-        });
-
-        function run(_rawData) {
-            // var countries = ['Australia', 'Canada', 'China', 'Cuba', 'Finland', 'France', 'Germany', 'Iceland', 'India', 'Japan', 'North Korea', 'South Korea', 'New Zealand', 'Norway', 'Poland', 'Russia', 'Turkey', 'United Kingdom', 'United States'];
-            const countries = [
-                'California', 'Texas', 'Illinois', 'Pennsylvania', 'Florida', 'New York'
-            ];
-            const datasetWithFilters = [];
-            const seriesList = [];
-            echarts.util.each(countries, function (country) {
-                var datasetId = 'dataset_' + country;
-                datasetWithFilters.push({
-                    id: datasetId,
-                    fromDatasetId: 'dataset_raw',
-                    transform: {
-                        type: 'filter',
-                        config: {
-                            and: [
-                                { dimension: 'Year', gte: 2014 },
-                                { dimension: 'Country', '=': country }
-                            ]
-                        }
-                    }
-                });
-                seriesList.push({
-                    type: 'line',
-                    datasetId: datasetId,
-                    showSymbol: false,
-                    name: country,
-                    endLabel: {
-                        show: true,
-                        formatter: function (params) {
-                            return params.value[1] + ': ' + params.value[0];
-                        }
-                    },
-                    labelLayout: {
-                        moveOverlap: 'shiftY'
-                    },
-                    emphasis: {
-                        focus: 'series'
-                    },
-                    encode: {
-                        x: 'Year',
-                        y: 'Income',
-                        label: ['Country', 'Income'],
-                        itemName: 'Year',
-                        tooltip: ['Income']
-                    }
-                });
-            });
-            option = {
-                animationDuration: 10000,
-                dataset: [
-                    {
-                        id: 'dataset_raw',
-                        source: _rawData
-                    },
-                    ...datasetWithFilters
-                ],
-                title: {
-                    text: 'Income of Germany and France since 1950'
+        option = {
+            title: {
+                text: '5年来全国“五一”假期旅游数据对比表', // 标题文本
+                textStyle: {
+                    fontWeight: 'normal', // 标题文字样式
+                    color: '#333'
                 },
-                tooltip: {
-                    order: 'valueDesc',
-                    trigger: 'axis'
-                },
-                xAxis: {
+                left: 'center', // 标题位置
+                top:25,
+                // padding: [0, 110], // 标题与图表的间距
+            },
+            tooltip: {
+                trigger: 'axis',
+                axisPointer: {
+                    type: 'cross',
+                    crossStyle: {
+                        color: '#999'
+                    }
+                }
+            },
+            toolbox: {
+                feature: {
+                    // dataView: { show: true, readOnly: false },
+                    magicType: { show: true, type: ['line', 'bar'] },
+                    // restore: { show: true },
+                    // saveAsImage: { show: true }
+                }
+            },
+            legend: {
+                data: ['接待人次', '旅游收入']
+            },
+            xAxis: [
+                {
                     type: 'category',
-                    nameLocation: 'middle'
+                    data: ['2019', '2020', '2021', '2022', '2023'],
+                    axisPointer: {
+                        type: 'shadow'
+                    }
+                }
+            ],
+            yAxis: [
+                {
+                    type: 'value',
+                    name: '接待人次',
+                    min: 0,
+                    max: 3,
+                    interval: 0.6,
+                    axisLabel: {
+                        formatter: '{value} 亿人次'
+                    }
                 },
-                yAxis: {
-                    name: 'Income'
+                {
+                    type: 'value',
+                    name: '旅游收入',
+                    min: 0,
+                    max: 1500,
+                    interval: 300,
+                    axisLabel: {
+                        formatter: '{value} 亿元'
+                    }
+                }
+            ],
+            series: [
+                {
+                    name: '接待人次',
+                    type: 'bar',
+                    tooltip: {
+                        valueFormatter: function (value) {
+                            return value + ' 亿人次';
+                        }
+                    },
+                    data: [
+                        1.95, 1.15, 2.3, 1.6, 2.74
+                    ]
                 },
-                grid: {
-                    right: 140
-                },
-                series: seriesList
-            };
-            myChart.setOption(option);
-        }
+                {
+                    name: '旅游收入',
+                    type: 'bar',
+                    yAxisIndex: 1, // 使用第二个 y 轴
+                    tooltip: {
+                        valueFormatter: function (value) {
+                            return value + ' 亿元';
+                        }
+                    },
+                    data: [
+                        1176.7, 475.6, 1132.3, 646.8, 1480.56
+                    ]
+                }
+            ]
+        };
 
         option && myChart.setOption(option);
+
 
     </script>
 
